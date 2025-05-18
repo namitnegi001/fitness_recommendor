@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fitness Package Recommendation</title>
+</head>
+<body>
+    <h2>Find Your Ideal Fitness Package</h2>
+    <form id="predictionForm">
+        Age: <input type="number" name="Age" required><br><br>
+
+        Gender:
+        <select name="Gender" required>
+            <option value="">--Select--</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select><br><br>
+
+        Fitness Goal:
+        <select name="Fitness_Goal" required>
+            <option value="">--Select--</option>
+            <option value="Weight Loss">Weight Loss</option>
+            <option value="Muscle Gain">Muscle Gain</option>
+            <option value="Flexibility">Flexibility</option>
+            <option value="General Fitness">General Fitness</option>
+            <option value="Stress Relief">Stress Relief</option>
+        </select><br><br>
+
+        Workout Experience:
+        <select name="Workout_Experience" required>
+            <option value="">--Select--</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+        </select><br><br>
+
+        Weekly Time Commitment (hours): 
+        <input type="number" name="Hours_per_Week" required><br><br>
+
+        Preferred Workout Type:
+        <select name="Workout_Type" required>
+            <option value="">--Select--</option>
+            <option value="Zumba">Zumba</option>
+            <option value="Yoga">Yoga</option>
+            <option value="HIIT">HIIT</option>
+            <option value="Mix">Mix</option>
+        </select><br><br>
+
+        Preferred Class Timing:
+        <select name="Timing" required>
+            <option value="">--Select--</option>
+            <option value="Morning">Morning</option>
+            <option value="Evening">Evening</option>
+            <option value="Flexible">Flexible</option>
+        </select><br><br>
+
+        Budget Range:
+        <select name="Budget" required>
+            <option value="">--Select--</option>
+            <option value="Low">Low (₹500–₹1000/month)</option>
+            <option value="Medium">Medium (₹1000–₹2000/month)</option>
+            <option value="High">High (₹2000+/month)</option>
+        </select><br><br>
+
+        <button type="submit">Get Recommendation</button>
+    </form>
+
+    <h3 id="result"></h3>
+
+    <script>
+        document.getElementById("predictionForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = {
+                Age: parseInt(form.Age.value),
+                Gender: form.Gender.value,
+                Fitness_Goal: form.Fitness_Goal.value,
+                Workout_Experience: form.Workout_Experience.value,
+                Hours_per_Week: parseInt(form.Hours_per_Week.value),
+                Workout_Type: form.Workout_Type.value,
+                Timing: form.Timing.value,
+                Budget: form.Budget.value
+            };
+
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById("result").innerText = "Recommended Package: " + result["Recommended Plan"];
+        });
+    </script>
+</body>
+</html>

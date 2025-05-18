@@ -1,0 +1,13 @@
+pandas
+numpy
+scikit-learn
+xgboost
+matplotlib
+seaborn
+shap
+lime
+joblib
+jupyter
+flask         # Optional - if using Flask API
+fastapi       # Optional - if using FastAPI
+uvicorn  # Optional - to run FastAPI server
